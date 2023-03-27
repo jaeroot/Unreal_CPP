@@ -15,6 +15,7 @@
 #include "ABPlayerState.h"
 #include "ABHUDWidget.h"
 #include "ABGameMode.h"
+#include "VisualLogger/VisualLogger.h"
 
 // Sets default values
 AABCharacter::AABCharacter()
@@ -242,7 +243,7 @@ void AABCharacter::SetCharacterState(ECharacterState NewState)
 
 			if (bIsPlayer)
 			{
-				ABPlayerController->RestartLevel();
+				ABPlayerController->ShowResultUI();
 			}
 			else
 			{
@@ -537,6 +538,9 @@ void AABCharacter::AttackCheck()
 		DrawColor,
 		false,
 		DebugLifeTime);
+
+	UE_VLOG_LOCATION(this, ArenaBattle, Verbose, GetActorLocation(), 50.0f, FColor::Blue, TEXT("Attack Position"));
+	UE_VLOG_CAPSULE(this, ArenaBattle, Verbose, GetActorLocation() - GetActorForwardVector() * AttackRadius, HalfHeight, AttackRadius, CapsuleRot, DrawColor, TEXT("Attack Area"));
 
 #endif
 
